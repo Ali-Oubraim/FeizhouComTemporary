@@ -55,13 +55,15 @@ exports.login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    let admin = await Admin.findOne({ email });
+    let admin = await Admin.findOne({ email: email.toLowerCase() });
+    // console.log(admin);
     if (!admin) {
-      return res.status(400).json({ msg: "Invalid credentials" });
+      return res.status(400).json({ msg: "Invalid Email" });
     }
+    // console.log(await admin.comparePassword(password));
 
-    if (admin.comparePassword(password)) {
-      return res.status(400).json({ msg: "Invalid credentials" });
+    if (!(await admin.comparePassword(password))) {
+      return res.status(400).json({ msg: "Invalid Password" });
     }
 
     const payload = {
