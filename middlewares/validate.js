@@ -22,6 +22,9 @@ exports.companyValidationRules = () => {
     check("password")
       .isLength({ min: 10 })
       .withMessage("Password must be at least 10 characters long"),
+    check("email")
+      .isEmail()
+      .withMessage("Email must be Valid"),
     check("websiteURL")
       .optional()
       .isURL()

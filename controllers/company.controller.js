@@ -18,6 +18,7 @@ exports.register = async (req, res) => {
     positionInCompany,
     password,
     brandLogo,
+    email,
     brandDesc,
     websiteURL,
   } = req.body;
@@ -38,6 +39,7 @@ exports.register = async (req, res) => {
       phoneNumber,
       positionInCompany,
       password,
+      email,
       brandLogo,
       brandDesc,
       websiteURL,
