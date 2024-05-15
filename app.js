@@ -5,8 +5,7 @@ const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 
 // Routes
-const companyRoutes = require("./routes/company.route");
-const authRoutes = require("./routes/auth.route");
+const authRoutes = require("./routes/authRouter");
 
 const app = express();
 
@@ -52,7 +51,6 @@ const swaggerOptions = {
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
-app.use("/company", companyRoutes);
 app.use("/auth", authRoutes);
 
 // Start server

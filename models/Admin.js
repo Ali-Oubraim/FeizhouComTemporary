@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcryptjs");
+const bcrypt = require("bcrypt");
 
 const AdminSchema = new mongoose.Schema(
   {
@@ -20,7 +20,7 @@ const AdminSchema = new mongoose.Schema(
       type: String,
       default: 'admin',
       enum: ['admin', 'owner'],
-      required: true,
+      required: false,
     },
   },
   { timestamps: true }
