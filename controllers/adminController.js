@@ -1,3 +1,4 @@
+const { validationResult } = require("express-validator");
 const Admin = require("../models/Admin");
 
 /**
@@ -23,6 +24,33 @@ exports.updateProfile = async (req, res) => {
   }
 };
 
+exports.updatePassword = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  const { oldPassword, newPassword } = req.body;
+  try {
+    let admin = await Admin.findById(req.params.id);
+    if (!admin) {
+      return res.status(404).json({ msg: "Admin not found" });
+    }
+
+    if (!(await admin.comparePassword(oldPassword))) {
+      return res.status(400).json({ msg: "Invalid old Password" });
+    }
+
+    admin.password = newPassword;
+
+    await admin.save();
+
+    res.json(admin);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
+};
+
 exports.deleteAdmin = async (req, res) => {
   try {
     let user = await Admin.findById(req.params.id);
@@ -32,12 +60,13 @@ exports.deleteAdmin = async (req, res) => {
 
     const updatedAdmin = await Admin.findByIdAndUpdate(
       { _id: req.params.id },
-      { isActive: !user.isActive },{
+      { isActive: !user.isActive },
+      {
         new: true,
       }
     );
-    
-    res.json({ msg: "User removed", updatedAdmin : updatedAdmin});
+
+    res.json({ msg: "User removed", updatedAdmin: updatedAdmin });
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");
