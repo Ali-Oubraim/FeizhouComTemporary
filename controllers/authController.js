@@ -56,11 +56,14 @@ exports.login = async (req, res) => {
 
   try {
     let admin = await Admin.findOne({ email: email.toLowerCase() });
-    // console.log(admin);
+
     if (!admin) {
       return res.status(400).json({ msg: "Invalid Email" });
     }
-    // console.log(await admin.comparePassword(password));
+    
+    if (!admin.isActive) {
+      return res.status(400).json({ msg: "Your Account Has Been Suspend !!" });
+    }
 
     if (!(await admin.comparePassword(password))) {
       return res.status(400).json({ msg: "Invalid Password" });
@@ -69,6 +72,7 @@ exports.login = async (req, res) => {
     const payload = {
       admin: {
         id: admin._id,
+        role: admin.role
       },
     };
 

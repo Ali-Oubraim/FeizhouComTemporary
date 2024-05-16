@@ -11,9 +11,9 @@ module.exports = function (req, res, next) {
   token = token.split(" ")[1];
 
   try {
-    console.log(token);
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.company = decoded.company;
+    console.log("from auth middleware: " + JSON.stringify(decoded));
+    req.user = decoded.admin;
     next();
   } catch (err) {
     console.log(err);

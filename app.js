@@ -6,6 +6,7 @@ const swaggerUi = require("swagger-ui-express");
 
 // Routes
 const authRoutes = require("./routes/authRouter");
+const adminRoutes = require("./routes/adminRouter");
 
 const app = express();
 
@@ -52,6 +53,7 @@ const swaggerDocs = swaggerJsDoc(swaggerOptions);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.use("/auth", authRoutes);
+app.use("/admin", adminRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5000;

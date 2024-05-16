@@ -1,5 +1,6 @@
 module.exports = (allowedRoles) => {
   return async (req, res, next) => {
+    console.log(req.admin);
     // check if passed arg is a string or array of roles :
     if (!Array.isArray(allowedRoles)) {
       allowedRoles = [allowedRoles];
