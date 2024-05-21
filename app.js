@@ -5,8 +5,9 @@ const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 
 // Routes
-const authRoutes = require("./routes/authRouter");
-const adminRoutes = require("./routes/adminRouter");
+const authRoutes = require("./routes/authRoutes");
+const userRoutes = require("./routes/userRoutes");
+const tagRoutes = require("./routes/tagRoutes");
 
 const app = express();
 
@@ -45,6 +46,20 @@ const swaggerOptions = {
         bearerAuth: [],
       },
     ],
+    tags: [
+      {
+        name: "Auth",
+        description: "Operations related to authentication",
+      },
+      {
+        name: "Users",
+        description: "Operations related to users",
+      },
+      {
+        name: "Tags",
+        description: "Operations related to tags",
+      },
+    ],
   },
   apis: ["./routes/*.js"],
 };
@@ -53,7 +68,8 @@ const swaggerDocs = swaggerJsDoc(swaggerOptions);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.use("/auth", authRoutes);
-app.use("/admin", adminRoutes);
+app.use("/users", userRoutes);
+app.use("/tags", tagRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5000;

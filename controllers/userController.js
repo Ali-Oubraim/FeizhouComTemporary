@@ -1,23 +1,26 @@
 const { validationResult } = require("express-validator");
-const Admin = require("../models/Admin");
+const User = require("../models/User");
 
 /**
- * Crud Operations for Admin
+ * Crud Operations for User
  */
 exports.updateProfile = async (req, res) => {
   const { name, email, role } = req.body;
   try {
-    let admin = await Admin.findById(req.params.id);
-    if (!admin) {
-      return res.status(404).json({ msg: "Admin not found" });
+    // console.log(req.user);
+    const { id } = req.user;
+    
+    let user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ msg: "User not found" });
     }
 
-    admin.name = name || admin.name;
-    admin.email = email || admin.email;
-    admin.role = role || admin.role;
+    user.name = name || user.name;
+    user.email = email || user.email;
+    user.role = role || user.role;
 
-    await admin.save();
-    res.json(admin);
+    await user.save();
+    res.json(user);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");
@@ -29,36 +32,37 @@ exports.updatePassword = async (req, res) => {
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
-  const { oldPassword, newPassword } = req.body;
   try {
-    let admin = await Admin.findById(req.params.id);
-    if (!admin) {
-      return res.status(404).json({ msg: "Admin not found" });
+    const { oldPassword, newPassword } = req.body;
+    const { id } = req.user;
+    let user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ msg: "User not found" });
     }
+    // console.log(await user.comparePassword(oldPassword));
 
-    if (!(await admin.comparePassword(oldPassword))) {
+    if (!(await user.comparePassword(oldPassword))) {
       return res.status(400).json({ msg: "Invalid old Password" });
     }
 
-    admin.password = newPassword;
+    user.password = newPassword;
 
-    await admin.save();
+    await user.save();
 
-    res.json(admin);
+    res.json(user);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");
   }
 };
 
-exports.deleteAdmin = async (req, res) => {
+exports.deleteUser = async (req, res) => {
   try {
-    let user = await Admin.findById(req.params.id);
+    let user = await User.findById(req.params.id);
     if (!user) {
       return res.status(404).json({ msg: "User not found" });
     }
-
-    const updatedAdmin = await Admin.findByIdAndUpdate(
+    const updatedUser = await User.findByIdAndUpdate(
       { _id: req.params.id },
       { isActive: !user.isActive },
       {
@@ -66,7 +70,7 @@ exports.deleteAdmin = async (req, res) => {
       }
     );
 
-    res.json({ msg: "User removed", updatedAdmin: updatedAdmin });
+    res.json({ msg: "User removed", updatedUser: updatedUser });
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");
@@ -75,7 +79,7 @@ exports.deleteAdmin = async (req, res) => {
 
 exports.getAllUsers = async (req, res) => {
   try {
-    const users = await Admin.find().select("-password");
+    const users = await User.find().select("-password");
     res.json(users);
   } catch (err) {
     console.error(err.message);

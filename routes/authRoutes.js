@@ -4,10 +4,19 @@ const { check } = require("express-validator");
 const authController = require("../controllers/authController");
 
 
+
+/**
+ * @swagger
+ * tags:
+ *   name: Auth
+ *   description: Operations related to authentication
+ */
+
 /**
  * @swagger
  * /auth/register:
  *   post:
+ *     tags: [Auth]
  *     summary: Login to the system
  *     description: Authenticate user and return JWT token
  *     requestBody:
@@ -52,6 +61,7 @@ router.post(
  * @swagger
  * /auth/login:
  *   post:
+ *     tags: [Auth]
  *     summary: Login to the system
  *     description: Authenticate user and return JWT token
  *     requestBody:

@@ -6,14 +6,23 @@ const roleMiddleware = require("../middlewares/roleMiddleware");
 const {
   getAllUsers,
   updateProfile,
-  deleteAdmin,
+  deleteUser,
   updatePassword,
-} = require("../controllers/adminController");
+} = require("../controllers/userController");
+
 
 /**
  * @swagger
- * /admin:
+ * tags:
+ *   name: Users
+ *   description: Operations related to users
+ */
+
+/**
+ * @swagger
+ * /users:
  *   get:
+ *     tags: [Users]
  *     summary: Get all users
  *     security:
  *       - bearerAuth: []
@@ -21,7 +30,7 @@ const {
  *       200:
  *         description: Successfully retrieved all users
  *       403:
- *         description: Access denied, admin only
+ *         description: Access denied, user only
  */
 router.get(
   "/",
@@ -32,18 +41,12 @@ router.get(
 
 /**
  * @swagger
- * /admin/{id}:
+ * /users:
  *   put:
- *     summary: Update admin information
+ *     tags: [Users]
+ *     summary: Update user information
  *     security:
  *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         schema:
- *           type: string
- *         required: true
- *         description: Admin ID
  *     requestBody:
  *       content:
  *         application/json:
@@ -54,29 +57,21 @@ router.get(
  *                 type: string
  *               email:
  *                 type: string
- *               role:
- *                 type: string
  *     responses:
  *       200:
  *         description: Successfully updated user information
  *       403:
- *         description: Access denied, admin only
+ *         description: Access denied, user only
  */
-router.put("/:id", authMiddleware, updateProfile);
+router.put("/", authMiddleware, updateProfile);
 /**
  * @swagger
- * /admin/edit-password/{id}:
+ * /users/edit-password:
  *   put:
- *     summary: Update admin Password
+ *     tags: [Users]
+ *     summary: Update user Password
  *     security:
  *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         schema:
- *           type: string
- *         required: true
- *         description: Admin ID
  *     requestBody:
  *       content:
  *         application/json:
@@ -91,10 +86,10 @@ router.put("/:id", authMiddleware, updateProfile);
  *       200:
  *         description: Successfully updated user information
  *       403:
- *         description: Access denied, admin only
+ *         description: Access denied, user only
  */
 router.put(
-  "/edit-password/:id",
+  "/edit-password",
   [
     check("newPassword")
       .isLength({ min: 10 })
@@ -106,8 +101,9 @@ router.put(
 
 /**
  * @swagger
- * /admin/{id}:
+ * /users/{id}:
  *   delete:
+ *     tags: [Users]
  *     summary: Delete a user
  *     security:
  *       - bearerAuth: []
@@ -122,8 +118,8 @@ router.put(
  *       200:
  *         description: Successfully deleted user
  *       403:
- *         description: Access denied, admin only
+ *         description: Access denied, owner only
  */
-router.delete("/:id", authMiddleware, roleMiddleware("owner"), deleteAdmin);
+router.delete("/:id", authMiddleware, roleMiddleware("owner"), deleteUser);
 
 module.exports = router;
