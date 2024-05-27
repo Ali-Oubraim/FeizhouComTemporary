@@ -15,6 +15,12 @@ const tagController = require("../controllers/tagController");
  *   get:
  *     summary: Get all tags
  *     tags: [Tags]
+ *     parameters:
+ *       - in: query
+ *         name: all
+ *         schema:
+ *           type: boolean
+ *         description: Number of tags to return
  *     responses:
  *       200:
  *         description: List of tags
@@ -23,7 +29,7 @@ const tagController = require("../controllers/tagController");
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/Tag'
+ *                 type: string
  */
 router.get("/", tagController.getAllTags);
 
@@ -37,15 +43,15 @@ router.get("/", tagController.getAllTags);
  *       required: true
  *       content:
  *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/Tag'
+ *          schema:
+ *            type: object
+ *            properties:
+ *              name:
+ *                type: string
+ *                description: The Tag's name 
  *     responses:
  *       201:
  *         description: Tag created successfully
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Tag'
  *       400:
  *         description: Bad request
  */
@@ -67,10 +73,6 @@ router.post("/", tagController.createTag);
  *     responses:
  *       200:
  *         description: Tag data
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Tag'
  *       404:
  *         description: Tag not found
  */
@@ -94,14 +96,14 @@ router.get("/:id", tagController.getTagById);
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Tag'
+ *            type: object
+ *            properties:
+ *              name:
+ *                type: string
+ *                description: The Tag's name 
  *     responses:
  *       200:
  *         description: Tag updated successfully
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Tag'
  *       400:
  *         description: Bad request
  *       404:
