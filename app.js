@@ -8,6 +8,7 @@ const swaggerUi = require("swagger-ui-express");
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const tagRoutes = require("./routes/tagRoutes");
+const categoryRoutes = require("./routes/categoryRoutes");
 
 const app = express();
 
@@ -59,6 +60,10 @@ const swaggerOptions = {
         name: "Tags",
         description: "Operations related to tags",
       },
+      {
+        name: "Categories",
+        description: "Operations related to Categories",
+      },
     ],
   },
   apis: ["./routes/*.js"],
@@ -70,6 +75,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
 app.use("/tags", tagRoutes);
+app.use("/categories", categoryRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5000;
