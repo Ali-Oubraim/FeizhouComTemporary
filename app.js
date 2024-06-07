@@ -15,9 +15,6 @@ const app = express();
 // Middleware
 app.use(express.json());
 
-// Connect to MongoDB
-connectDB();
-
 // Swagger Options
 const swaggerOptions = {
   swaggerDefinition: {
@@ -72,6 +69,9 @@ const swaggerOptions = {
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
+app.get("/api", (req, res) => {
+  res.json({ message: "Welcome to Company REST API" });
+});
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/tags", tagRoutes);
@@ -79,8 +79,12 @@ app.use("/api/categories", categoryRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () =>
-  console.log(
-    `Server started on port ${PORT} 🚀\n http://localhost:5000/api-docs\n http://localhost:5000/api)`
-  )
-);
+app.listen(PORT, async () => {
+  // Connect to MongoDB
+  await connectDB();
+  console.table({
+    Server: "Running",
+    Endpoint: `http://localhost:3000/api`,
+    API_Docs: `http://localhost:3000/api-docs`,
+  });
+});
