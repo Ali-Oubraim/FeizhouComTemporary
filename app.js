@@ -30,7 +30,7 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: "http://localhost:5000/",
+        url: "http://localhost:5000/api",
       },
     ],
     components: {
@@ -72,11 +72,15 @@ const swaggerOptions = {
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
-app.use("/auth", authRoutes);
-app.use("/users", userRoutes);
-app.use("/tags", tagRoutes);
-app.use("/categories", categoryRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/tags", tagRoutes);
+app.use("/api/categories", categoryRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server started on port ${PORT} 🚀`));
+app.listen(PORT, () =>
+  console.log(
+    `Server started on port ${PORT} 🚀\n http://localhost:5000/api-docs\n http://localhost:5000/api)`
+  )
+);
