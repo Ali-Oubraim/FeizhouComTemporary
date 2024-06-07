@@ -2,8 +2,10 @@ const express = require("express");
 const router = express.Router();
 const { check } = require("express-validator");
 const authController = require("../controllers/authController");
-
-
+const {
+  registerValidationRules,
+  loginValidationRules,
+} = require("../middlewares/validate");
 
 /**
  * @swagger
@@ -44,18 +46,7 @@ const authController = require("../controllers/authController");
  *       400:
  *         description: Invalid credentials
  */
-router.post(
-  "/register",
-  [
-    check("email", "Please include a valid email").isEmail(),
-    check("password", "Password is required").exists(),
-    check("role", "Please include a valid role")
-      .isIn(["admin", "owner"])
-      .optional(),
-    check("name", "Name is required").exists(),
-  ],
-  authController.register
-);
+router.post("/register", registerValidationRules, authController.register);
 
 /**
  * @swagger
@@ -83,13 +74,6 @@ router.post(
  *       400:
  *         description: Invalid credentials
  */
-router.post(
-  "/login",
-  [
-    check("email", "Please include a valid email").isEmail(),
-    check("password", "Password is required").exists(),
-  ],
-  authController.login
-);
+router.post("/login", loginValidationRules, authController.login);
 
 module.exports = router;
