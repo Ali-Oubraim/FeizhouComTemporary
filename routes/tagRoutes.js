@@ -2,6 +2,32 @@ const express = require("express");
 const router = express.Router();
 const tagController = require("../controllers/tagController");
 
+
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Tag:
+ *       type: object
+ *       required:
+ *         - name
+ *       properties:
+ *         id:
+ *           type: string
+ *           description: The auto-generated id of the tag
+ *         name:
+ *           type: string
+ *           description: The name of the tag
+ *         isActivate:
+ *           type: boolean
+ *           description: The activation status of the tag
+ *       example:
+ *         id: 60d0fe4f5311236168a109ca
+ *         name: Technology
+ *         isActivate: true
+ */
+
 /**
  * @swagger
  * tags:

@@ -13,6 +13,61 @@ const {
 
 /**
  * @swagger
+ * components:
+ *   schemas:
+ *     User:
+ *       type: object
+ *       required:
+ *         - fullName
+ *         - email
+ *         - password
+ *       properties:
+ *         id:
+ *           type: string
+ *           description: The auto-generated id of the user
+ *         fullName:
+ *           type: string
+ *           description: The full name of the user
+ *         email:
+ *           type: string
+ *           description: The email of the user
+ *         password:
+ *           type: string
+ *           description: The password of the user
+ *         role:
+ *           type: string
+ *           description: The role of the user
+ *           enum:
+ *             - admin
+ *             - owner
+ *         isActive:
+ *           type: boolean
+ *           description: The activation status of the user
+ *         avatar:
+ *           type: string
+ *           description: The avatar of the user
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *           description: The date the user was created
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
+ *           description: The date the user was last updated
+ *       example:
+ *         id: 60d0fe4f5311236168a109ca
+ *         fullName: John Doe
+ *         email: john.doe@example.com
+ *         password: SamplePassword123
+ *         role: admin
+ *         isActive: true
+ *         avatar: http://example.com/avatar.jpg
+ *         createdAt: 2022-04-01T10:00:00.000Z
+ *         updatedAt: 2022-04-01T10:00:00.000Z
+ */
+
+/**
+ * @swagger
  * tags:
  *   name: Users
  *   description: Operations related to users
