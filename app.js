@@ -90,7 +90,7 @@ app.listen(PORT, async () => {
   await connectDB();
   console.table({
     Server: "Running",
-    Endpoint: `http://localhost:3000/api`,
-    API_Docs: `http://localhost:3000/api-docs`,
+    Endpoint: `http://localhost:5000/api`,
+    API_Docs: `http://localhost:5000/api-docs`,
   });
 });
