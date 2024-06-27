@@ -74,9 +74,9 @@ exports.registerValidationRules = () => {
       .isLength({ min: 8, max: 50 }, "Password most be at least 8 chars")
       .exists(),
     check("role", "Please include a valid role")
-      .isIn(["admin", "owner"])
+      .isIn(["admin", "owner", "developer"])
       .optional(),
-    check("name", "Name is required").exists(),
+    check("fullName", "Full Name is required").exists(),
   ];
 };
 

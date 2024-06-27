@@ -24,6 +24,16 @@ const UserSchema = new mongoose.Schema(
       enum: ["admin", "owner", "developer"],
       required: false,
     },
+    position: {
+      type: String,
+      default: null,
+      required: false,
+    },
+    phoneNumber: {
+      type: String,
+      default: null,
+      required: false,
+    },
     permissions: [
       {
         type: String,
