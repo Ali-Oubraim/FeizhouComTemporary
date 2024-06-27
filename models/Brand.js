@@ -8,11 +8,11 @@ const BrandSchema = new mongoose.Schema({
   },
   brandLogo: {
     type: String,
-    required: [false, "Brand logo is required"],
+    required: false,
   },
   sector: {
     type: String,
-    required: [true, "Sector is required"],
+    required: false,
   },
   username: {
     type: String,
@@ -30,17 +30,22 @@ const BrandSchema = new mongoose.Schema({
   },
   position_in_brand: {
     type: String,
-    required: [true, "Position in brand is required"],
+    required: false,
   },
   brandSize: {
     type: String,
-    enum: ["small", "medium", "large"],
-    required: [true, "Brand size is required"],
+    enum: ["Petite(TRE)", "Moyenne(FME/ETI)", "Grande(GE)"],
+    required: false,
   },
   brandType: {
     type: String,
-    enum: ["coparatif", "company", "assiciation"],
-    required: [true, "Brand type is required"],
+    enum: ["Coopérative", "Entreprise", "Association", "Auto-entrepreneur"],
+    required: false,
+  },
+  ICE: {
+    type: Number,
+    default: null,
+    required: false,
   },
   isActivate: {
     type: Boolean,

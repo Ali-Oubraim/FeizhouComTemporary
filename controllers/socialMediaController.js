@@ -1,13 +1,14 @@
-const Category = require("../models/Category");
+// const SocialMedia = require('../models/SocialMedia');
+const SocialMedia = require("../models/socialMedia");
 
 // Create a new category
 exports.createTag = async (req, res) => {
   try {
-    let category = await Category.findOne({ name: req.body.name });
+    let category = await SocialMedia.findOne({ name: req.body.name });
     if (category) {
-      return res.status(400).json({ msg: "Category already exists" });
+      return res.status(400).json({ msg: "SocialMedia already exists" });
     }
-    category = new Category(req.body);
+    category = new SocialMedia(req.body);
     await category.save();
     res.status(201).json(category);
   } catch (err) {
@@ -20,9 +21,9 @@ exports.getAllTags = async (req, res) => {
   try {
     let tags;
     if (req.query.all == "true") {
-      tags = await Category.find();
+      tags = await SocialMedia.find();
     } else {
-      tags = await Category.find({
+      tags = await SocialMedia.find({
         isActivate: true,
       });
     }
@@ -35,9 +36,9 @@ exports.getAllTags = async (req, res) => {
 // Get a category by ID
 exports.getTagById = async (req, res) => {
   try {
-    const category = await Category.findById(req.params.id);
+    const category = await SocialMedia.findById(req.params.id);
     if (!category) {
-      return res.status(404).json({ error: "Category not found" });
+      return res.status(404).json({ error: "SocialMedia not found" });
     }
     res.status(200).json(category);
   } catch (err) {
@@ -48,12 +49,12 @@ exports.getTagById = async (req, res) => {
 // Update a category by ID
 exports.updateTag = async (req, res) => {
   try {
-    const category = await Category.findByIdAndUpdate(req.params.id, req.body, {
+    const category = await SocialMedia.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true,
     });
     if (!category) {
-      return res.status(404).json({ error: "Category not found" });
+      return res.status(404).json({ error: "SocialMedia not found" });
     }
     res.status(200).json(category);
   } catch (err) {
@@ -65,19 +66,19 @@ exports.updateTag = async (req, res) => {
 exports.deleteTag = async (req, res) => {
   try {
     const { id } = req.params;
-    let category = await Category.findOne({ _id: id });
+    let category = await SocialMedia.findOne({ _id: id });
     console.log(category);
     if (!category) {
-      return res.status(404).json({ error: "Category not found" });
+      return res.status(404).json({ error: "SocialMedia not found" });
     }
 
-    category = await Category.findByIdAndUpdate(
+    category = await SocialMedia.findByIdAndUpdate(
       { _id: id },
       { isActivate: !category.isActivate },
       { new: true }
     );
 
-    res.status(200).json({ message: "Category deleted successfully", category });
+    res.status(200).json({ message: "SocialMedia deleted successfully", category });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

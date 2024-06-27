@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const CategorySchema = new mongoose.Schema({
+const SocialMediaSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -16,4 +16,4 @@ const CategorySchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("Category", CategorySchema);
+module.exports = mongoose.model("SocialMedia", SocialMediaSchema);

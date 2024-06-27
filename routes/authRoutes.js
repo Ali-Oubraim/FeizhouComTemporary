@@ -1,10 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const { check } = require("express-validator");
 const authController = require("../controllers/authController");
 const {
   registerValidationRules,
-  loginValidationRules,
+  loginValidationRules,validate
 } = require("../middlewares/validate");
 
 /**
@@ -46,7 +45,7 @@ const {
  *       400:
  *         description: Invalid credentials
  */
-router.post("/register", registerValidationRules, authController.register);
+router.post("/register", registerValidationRules(),validate, authController.register);
 
 /**
  * @swagger
@@ -74,6 +73,29 @@ router.post("/register", registerValidationRules, authController.register);
  *       400:
  *         description: Invalid credentials
  */
-router.post("/login", loginValidationRules, authController.login);
+router.post("/login", loginValidationRules(),validate, authController.login);
+
+/**
+ * @swagger
+ * /auth/logout:
+ *   post:
+ *     tags: [Auth]
+ *     summary: Logout from the system
+ *     description: Clear the authentication token cookie and log out the user.
+ *     responses:
+ *       200:
+ *         description: Successfully logged out
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *                   example: Logged out
+ *       500:
+ *         description: Server error
+ */
+router.post("/logout", authController.logout);
 
 module.exports = router;

@@ -1,36 +1,6 @@
-const { check } = require("express-validator");
+const { check, validationResult } = require("express-validator");
 
-// exports.companyValidationRules = () => {
-//   return [
-//     check("companyName")
-//       .not()
-//       .isEmpty()
-//       .withMessage("Company name is required"),
-//     check("industry").not().isEmpty().withMessage("Industry is required"),
-//     check("companySize")
-//       .isIn(["Small", "Medium", "Large"])
-//       .withMessage("Company size must be Small, Medium, or Large"),
-//     check("personName").not().isEmpty().withMessage("Person name is required"),
-//     check("phoneNumber")
-//       .not()
-//       .isEmpty()
-//       .withMessage("Phone number is required"),
-//     check("positionInCompany")
-//       .not()
-//       .isEmpty()
-//       .withMessage("Position in company is required"),
-//     check("password")
-//       .isLength({ min: 10 })
-//       .withMessage("Password must be at least 10 characters long"),
-//     check("email")
-//       .isEmail()
-//       .withMessage("Email must be Valid"),
-//     check("websiteURL")
-//       .optional()
-//       .isURL()
-//       .withMessage("Website URL must be valid"),
-//   ];
-// };
+
 exports.brandValidationRules = () => {
   return [
     check("brandName").not().isEmpty().withMessage("Brand name is required"),
@@ -112,7 +82,14 @@ exports.registerValidationRules = () => {
 
 exports.loginValidationRules = () => {
   return [
-    check("email", "Please include a valid email").isEmail(),
-    check("password", "Password is required").exists(),
+    check("email").isEmail().withMessage("Please include a valid email"),
+    check("password").exists().withMessage("Password is required"),
   ];
+};
+exports.validate = (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  next();
 };

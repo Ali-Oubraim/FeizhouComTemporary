@@ -1,29 +1,29 @@
 const express = require("express");
 const router = express.Router();
-const categoryController = require("../controllers/categoryController");
+const socialMediaController = require("../controllers/socialMediaController");
 
 /**
  * @swagger
  * tags:
- *   name: Categories
+ *   name: Social Media
  *   description: Tag management API
  */
 
 /**
  * @swagger
- * /categories:
+ * /social-media:
  *   get:
- *     summary: Get all categories
- *     tags: [Categories]
+ *     summary: Get all social-media
+ *     tags: [Social Media]
  *     parameters:
  *       - in: query
  *         name: all
  *         schema:
  *           type: boolean
- *         description: Number of categories to return
+ *         description: Number of social-media to return
  *     responses:
  *       200:
- *         description: List of categories
+ *         description: List of social-media
  *         content:
  *           application/json:
  *             schema:
@@ -31,14 +31,14 @@ const categoryController = require("../controllers/categoryController");
  *               items:
  *                 type: string
  */
-router.get("/", categoryController.getAllTags);
+router.get("/", socialMediaController.getAllTags);
 
 /**
  * @swagger
- * /categories:
+ * /social-media:
  *   post:
  *     summary: Create a new tag
- *     tags: [Categories]
+ *     tags: [Social Media]
  *     requestBody:
  *       required: true
  *       content:
@@ -55,14 +55,14 @@ router.get("/", categoryController.getAllTags);
  *       400:
  *         description: Bad request
  */
-router.post("/", categoryController.createTag);
+router.post("/", socialMediaController.createTag);
 
 /**
  * @swagger
- * /categories/{id}:
+ * /social-media/{id}:
  *   get:
  *     summary: Get a tag by ID
- *     tags: [Categories]
+ *     tags: [Social Media]
  *     parameters:
  *       - in: path
  *         name: id
@@ -76,14 +76,14 @@ router.post("/", categoryController.createTag);
  *       404:
  *         description: Tag not found
  */
-router.get("/:id", categoryController.getTagById);
+router.get("/:id", socialMediaController.getTagById);
 
 /**
  * @swagger
- * /categories/{id}:
+ * /social-media/{id}:
  *   put:
  *     summary: Update a tag by ID
- *     tags: [Categories]
+ *     tags: [Social Media]
  *     parameters:
  *       - in: path
  *         name: id
@@ -109,14 +109,14 @@ router.get("/:id", categoryController.getTagById);
  *       404:
  *         description: Tag not found
  */
-router.put("/:id", categoryController.updateTag);
+router.put("/:id", socialMediaController.updateTag);
 
 /**
  * @swagger
- * /categories/{id}:
+ * /social-media/{id}:
  *   delete:
  *     summary: Delete a tag by ID
- *     tags: [Categories]
+ *     tags: [Social Media]
  *     parameters:
  *       - in: path
  *         name: id
@@ -130,6 +130,6 @@ router.put("/:id", categoryController.updateTag);
  *       404:
  *         description: Tag not found
  */
-router.delete("/:id", categoryController.deleteTag);
+router.delete("/:id", socialMediaController.deleteTag);
 
 module.exports = router;

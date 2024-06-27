@@ -1,9 +1,9 @@
 const express = require("express");
-const { check } = require("express-validator");
 const brandController = require("../controllers/brandController");
 const {
   updateBrandValidationRules,
   brandValidationRules,
+  validate,
 } = require("../middlewares/validate");
 
 const router = express.Router();
@@ -105,7 +105,7 @@ const router = express.Router();
  *         description: Some server error
  */
 
-router.post("/", brandValidationRules(), brandController.createBrand);
+router.post("/", brandValidationRules(),validate, brandController.createBrand);
 
 /**
  * @swagger
@@ -182,7 +182,7 @@ router.get("/:id", brandController.getBrandById);
  *       500:
  *         description: Some error happened
  */
-router.put("/:id", updateBrandValidationRules(), brandController.updateBrand);
+router.put("/:id", updateBrandValidationRules(),validate, brandController.updateBrand);
 
 /**
  * @swagger

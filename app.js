@@ -3,19 +3,24 @@ const connectDB = require("./config/db.config"); // Adjust the path as necessary
 
 const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 
 // Routes
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const tagRoutes = require("./routes/tagRoutes");
-const categoryRoutes = require("./routes/categoryRoutes");
+const socialMediaRoutes = require("./routes/socialMediaRoutes");
 const brandRoutes = require("./routes/brandRoutes");
+const influencerRoutes = require("./routes/influencerRoutes");
 
 const app = express();
 
 // Middleware
 app.use(express.json());
-
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(bodyParser.json());
 // Swagger Options
 const swaggerOptions = {
   swaggerDefinition: {
@@ -59,7 +64,7 @@ const swaggerOptions = {
         description: "Operations related to tags",
       },
       {
-        name: "Categories",
+        name: "Social Media",
         description: "Operations related to Categories",
       },
       {
@@ -80,8 +85,9 @@ app.get("/api", (req, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/tags", tagRoutes);
-app.use("/api/categories", categoryRoutes);
+app.use("/api/social-media", socialMediaRoutes);
 app.use("/api/brands", brandRoutes);
+app.use("/api/influencers", influencerRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5000;

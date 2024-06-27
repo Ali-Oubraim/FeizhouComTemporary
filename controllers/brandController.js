@@ -3,11 +3,6 @@ const { validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
 
 exports.createBrand = async (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-
   try {
     const {
       brandName,
@@ -61,11 +56,6 @@ exports.getBrandById = async (req, res) => {
 };
 
 exports.updateBrand = async (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-
   try {
     const {
       brandName,
