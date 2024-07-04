@@ -5,6 +5,7 @@ const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
+const cors = require('cors')
 
 // Routes
 const authRoutes = require("./routes/authRoutes");
@@ -21,6 +22,23 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(bodyParser.json());
+app.use(
+  cors({
+    origin: ["http://localhost:5173", "http://localhost:5174"],
+    credentials: true,
+    allowedHeaders: [
+      "Content-Type",
+      "Authorization",
+      "X-Requested-With",
+      "Origin",
+      "Accept",
+      "X-Access-Token",
+    ],
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
+  })
+);
 // Swagger Options
 const swaggerOptions = {
   swaggerDefinition: {
